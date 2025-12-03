@@ -5,7 +5,7 @@ internal class DayThree
 {
 	public static void Execute()
 	{
-		var instructions = ProcessInput(DayThreeInput.ExamplePuzzleInput);
+		var instructions = ProcessInput(DayThreeInput.PuzzleInput);
 
 		Console.WriteLine($"--- {nameof(DayThree)} ---");
 		Part1(instructions);
@@ -17,8 +17,20 @@ internal class DayThree
 	{
 		long answer = 0;
 
+		foreach (var instruction in instructions)
+		{
+			var largestValue = instruction.Numbers
+				.SelectMany((first, i) => instruction.Numbers
+					.Skip(i + 1)
+					.Select(second => first * 10 + second))
+				.Max();
+			answer += largestValue;
+		}
 		Console.WriteLine($"Part 1 answer: {answer}");
 	}
+
+
+
 
 	private static void Part2(Instruction[] instructions)
 	{
@@ -27,32 +39,14 @@ internal class DayThree
 		Console.WriteLine($"Part 2 answer: {answer}");
 	}
 
-	private static string? FindPattern(string text)
-	{
-		for (int n = 1; n <= text.Length / 2; n++)
-		{
-			if (text.Length % n != 0)
-			{
-				continue;
-			}
-
-			string pattern = text[..n];
-			int repeatCount = text.Length / pattern.Length;
-			string repeated = string.Concat(Enumerable.Repeat(pattern, repeatCount));
-
-			if (repeated == text)
-			{
-				return pattern;
-			}
-		}
-
-		return null;
-	}
-
 	private static Instruction[] ProcessInput(string input)
 	{
-		return [];
+		return input
+			.Split('\n')
+			.Select(x => x.Select(c => (int)char.GetNumericValue(c)).ToArray())
+			.Select(numbers => new Instruction(numbers))
+			.ToArray();
 	}
 
-	private record Instruction();
+	private record Instruction(int[] Numbers);
 }
