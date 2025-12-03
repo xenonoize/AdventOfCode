@@ -26,18 +26,40 @@ internal class DayThree
 				.Max();
 			answer += largestValue;
 		}
+
 		Console.WriteLine($"Part 1 answer: {answer}");
 	}
 
-
-
-
 	private static void Part2(Instruction[] instructions)
 	{
-		long answer = 0;
+		var answer = instructions.Sum(instruction => FindMaxNumber(instruction.Numbers, 12));
 
 		Console.WriteLine($"Part 2 answer: {answer}");
 	}
+
+	private static long FindMaxNumber(int[] numbers, int targetLength)
+	{
+		var result = new List<int>();
+		var toSkip = numbers.Length - targetLength;
+		var skipped = 0;
+
+		foreach (var number in numbers)
+		{
+			while (result.Count > 0 && result[^1] < number && skipped < toSkip)
+			{
+				result.RemoveAt(result.Count - 1);
+				skipped++;
+			}
+
+			result.Add(number);
+		}
+
+		result = result.Take(targetLength).ToList();
+
+		return result.Aggregate<int, long>(0, (current, number) => current * 10 + number);
+	}
+
+
 
 	private static Instruction[] ProcessInput(string input)
 	{
