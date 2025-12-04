@@ -32,8 +32,7 @@ internal class DayThree
 
 	private static void Part2(Instruction[] instructions)
 	{
-		var answer = instructions.Sum(instruction => FindMaxNumber(instruction.Numbers, 12));
-
+		var answer = instructions.Aggregate(0L, (acc, instruction) => acc + FindMaxNumber(instruction.Numbers, 12));
 		Console.WriteLine($"Part 2 answer: {answer}");
 	}
 
