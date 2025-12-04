@@ -7,14 +7,15 @@ internal class DayOne
 	public static void Execute()
 	{
 		Console.WriteLine("--- DayOne ---");
-		Part1();
-		Part2();
+		var (firstList, secondList) = ProcessInput(DayOneInput.PuzzleInput);
+		Part1(firstList, secondList);
+		Part2(firstList, secondList);
 		Console.WriteLine("--------------");
 	}
 
-	private static void Part1()
+	private static void Part1(List<long> firstList, List<long> secondList)
 	{
-		var (firstList, secondList) = ProcessInput(Input.DayOneInput);
+
 		long answer = 0;
 		var firstListOrdered = firstList.OrderBy(x => x).ToList();
 		var secondListOrdered = secondList.OrderBy(x => x).ToList();
@@ -26,9 +27,8 @@ internal class DayOne
 		Console.WriteLine($"Part 1 answer: {answer}");
 	}
 
-	private static void Part2()
+	private static void Part2(List<long> firstList, List<long> secondList)
 	{
-		var (firstList, secondList) = ProcessInput(Input.DayOneInput);
 		long answer = 0;
 		var firstListOrdered = firstList.OrderBy(x => x).ToList();
 		var secondListOrdered = secondList.OrderBy(x => x).ToList();

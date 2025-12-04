@@ -1,23 +1,24 @@
 using AdventOfCode._2024.Inputs;
 namespace AdventOfCode._2024.Days;
 
-public class DayTwo
+internal class DayTwo
 {
 	public static void Execute()
 	{
 		Console.WriteLine("--- DayTwo ---");
-		Part1();
-		Part2();
+		var input = ProcessInput(DayTwoInput.PuzzleInput);
+		Part1(input);
+		Part2(input);
 		Console.WriteLine("--------------");
 	}
 
-	private static void Part1()
+	private static void Part1(List<List<long>> input)
 	{
 		long answer = 0;
 		// var answer = ProcessInput(Input.Input.DayTwoInput).Where(IsValidSequence).Count();
 		// var answer = ProcessInput(Input.Input.DayTwoInput).LongCount(IsValidSequence);
 
-		foreach (var sequence in ProcessInput(Input.DayTwoInput))
+		foreach (var sequence in input)
 		{
 			if (IsValidSequence(sequence))
 			{
@@ -67,16 +68,9 @@ public class DayTwo
 	}
 
 
-	private static void Part2()
+	private static void Part2(List<List<long>> input)
 	{
-		long answer = 0;
-		foreach (var sequence in ProcessInput(Input.DayTwoInput))
-		{
-			if (IsValidSequence(sequence) || IsValidUnsafeSequence(sequence))
-			{
-				answer++;
-			}
-		}
+		long answer = input.LongCount(sequence => IsValidSequence(sequence) || IsValidUnsafeSequence(sequence));
 
 		Console.WriteLine($"Part 2 answer: {answer}");
 	}
@@ -112,8 +106,8 @@ public class DayTwo
 		return false;
 	}
 
-	private static IEnumerable<List<long>> ProcessInput(string input)
+	private static List<List<long>> ProcessInput(string input)
 	{
-		return input.Split('\n').Select(line => line.Split(" ").Select(long.Parse).ToList());
+		return input.Split('\n').Select(line => line.Split(" ").Select(long.Parse).ToList()).ToList();
 	}
 }
