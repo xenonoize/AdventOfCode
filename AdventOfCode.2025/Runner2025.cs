@@ -10,6 +10,7 @@ public static class Runner2025
 		DayTwo.Execute();
 		DayThree.Execute();
 		DayFour.Execute();
+		DayFive.Execute();
 		Console.WriteLine("-------------------------");
 	}
 }
