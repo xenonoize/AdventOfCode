@@ -54,7 +54,7 @@ internal class DaySix
 	{
 		var numbers = ExtractNumbers(lines, start, end);
 		var operation = ExtractOperator(lines, start, end);
-		return numbers.Count == 0 ? 0 : ApplyOperation(numbers, operation);
+		return ApplyOperation(numbers, operation);
 	}
 
 	private static List<long> ExtractNumbers(string[] lines, int start, int end)
@@ -96,6 +96,10 @@ internal class DaySix
 
 	private static long ApplyOperation(List<long> numbers, char operation)
 	{
+		if (numbers.Count == 0)
+		{
+			return 0;
+		}
 		return operation == Add ? numbers.Sum() : numbers.Aggregate(1L, (a, b) => a * b);
 	}
 
@@ -136,7 +140,7 @@ internal class DaySix
 			}
 		}
 
-		return numbers.Count == 0 ? 0 : ApplyOperation(numbers, operation);
+		return ApplyOperation(numbers, operation);
 	}
 
 	private static string[] ProcessInput(string input)
